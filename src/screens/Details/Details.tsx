@@ -5,28 +5,37 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { RootStackParamList } from "@routes/RootRouter";
 import Catch from "@components/Catch";
 import useFetch from "@hooks/useFetch";
-import getEggGroup from "@services/pokemon/getEggGroup";
+import getSpecie from "@services/pokemon/getSpecie";
 import http from "@config/http";
 
 const Details = () => {
   const { pokemon } =
     useRoute<RouteProp<RootStackParamList, "Details">>().params;
   const [resource] = useState({ resource: pokemon.id });
-  const { data } = useFetch(getEggGroup, http, resource);
+  const { data, error } = useFetch(getSpecie, http, resource);
   return (
     <S.Container>
       <Header showBack showTitle title={`Detalhes - ${pokemon.name}`} />
       <S.Content>
         <S.Image source={{ uri: pokemon.sprites.front_default }} />
-        <S.Name>{pokemon.name}</S.Name>
+        <S.Name>
+          {pokemon.name} #{pokemon.id}
+        </S.Name>
 
         <S.Title>Tipos:</S.Title>
         <S.Type>
           {pokemon.types.map((type) => type.type.name).join(", ")}
         </S.Type>
-        <S.Divider />
-        <S.Title>Especie:</S.Title>
-        <S.EggGroup>{data?.name || "Carregando..."}</S.EggGroup>
+        {!error && (
+          <>
+            <S.Divider />
+            <S.Title>Especie:</S.Title>
+            <S.EggGroup>
+              {data?.egg_groups.map((egg) => egg.name).join(", ") ||
+                "Carregando..."}
+            </S.EggGroup>
+          </>
+        )}
 
         <S.Divider />
         <S.Height>
