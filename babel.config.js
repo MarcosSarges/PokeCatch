@@ -6,12 +6,15 @@ module.exports = {
       {
         root: ["./"],
         alias: {
+          "@assets": "./assets",
           "@config": "./src/config",
           "@services": "./src/services",
           "@screens": "./src/screens",
           "@routes": "./src/routes",
           "@hooks": "./src/hooks",
+          "@store": "./src/store",
           "@components": "./src/components",
+          "@domain": "./src/domain",
           "@styles": "./src/styles",
           "@helpers": "./src/utils/helpers",
           "@constants": "./src/utils/constants",
@@ -20,6 +23,5 @@ module.exports = {
         },
       },
     ],
-    "react-native-reanimated/plugin",
   ],
 };
